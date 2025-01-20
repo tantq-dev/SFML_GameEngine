@@ -1,5 +1,9 @@
 #include "Animation.h"
 
+Animation::Animation()
+{
+}
+
 Animation::Animation(sf::Texture &texture, int frameCount, int speed)
 {
 	m_frameCount = frameCount;

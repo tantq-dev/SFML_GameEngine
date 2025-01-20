@@ -17,7 +17,7 @@ Scene_Play::Scene_Play(GameEngine* gameEngine, const std::string& levelPath)
 
 	Animation a = Animation(texture, 5, 10);
 
-	tile->cAnimation = tile->addComponent<CAnimation>(a);
+	tile->addComponent<CAnimation>(a);
 	tile->addComponent<CTransform>(Vec2(200.0f, 200.0f), Vec2(3.0f, 3.0f), 0.0f);
 
 	//std::cout << "Entity: " << m_entities.getEntities().size() << std::endl;
@@ -107,9 +107,10 @@ void Scene_Play::sRender()
 	{
 		if (e->hasComponent<CAnimation>())
 		{
-			e->cAnimation->animation.update();
-			e->cAnimation->animation.getSprite().setPosition(100, 100);
-			m_game->window().draw(e->cAnimation->animation.getSprite());
+			Animation &animation = e->getComponent<CAnimation>()->animation;
+			animation.update();
+			animation.getSprite().setPosition(100, 100);
+			m_game->window().draw(animation.getSprite());
 		}
 	}
 
@@ -139,7 +140,7 @@ void Scene_Play::sDebug()
 Vec2 Scene_Play::gridToMidPixel(float gridX, float gridY, std::shared_ptr<Entity> entity)
 {
 
-	return Vec2(gridX * 64 + (0.5*entity->cAnimation->animation.getSize().x), gridY * 64 +(0.5 * entity->cAnimation->animation.getSize().y));
+	return Vec2(gridX * 64 + (0.5*entity->getComponent<CAnimation>()->animation.getSize().x), gridY * 64 + (0.5 * entity->getComponent<CAnimation>()->animation.getSize().y));
 }
 
 
